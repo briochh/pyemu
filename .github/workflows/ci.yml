@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest] #, windows-latest] #, macos-latest] 
-        python-version: [3.7] # , 3.7, 3.6]
+        python-version: [3.7, 3.8] # , 3.7, 3.6]
         run-type: [std]
         test-path: [
               # "utils_tests.py", 
@@ -72,7 +72,7 @@ jobs:
     # Standard python fails on windows without GDAL installation
     # Using custom bash shell ("shell: bash -l {0}") with Miniconda
     - name: Setup Miniconda
-      uses: conda-incubator/setup-miniconda@v2.0.0
+      uses: conda-incubator/setup-miniconda
       with:
         python-version: ${{ matrix.python-version }}
         mamba-version: "*"
