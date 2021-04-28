@@ -72,8 +72,9 @@ jobs:
     # Standard python fails on windows without GDAL installation
     # Using custom bash shell ("shell: bash -l {0}") with Miniconda
     - name: Setup Miniconda
-      uses: conda-incubator/setup-miniconda
+      uses: conda-incubator/setup-miniconda@v2
       with:
+        miniconda-version: "latest"
         python-version: ${{ matrix.python-version }}
         mamba-version: "*"
         channels: conda-forge
