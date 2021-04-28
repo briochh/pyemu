@@ -3,13 +3,13 @@ channels:
   - conda-forge
   - defaults
 dependencies:  
+  - pyshp
   - numpy 
   - pandas 
-  - pyshp
   - nose-timer
   - nbsphinx
-  - matplotlib
   - pillow
+  - matplotlib
   - coverage
   - coveralls
   - nose
