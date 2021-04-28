@@ -30,7 +30,7 @@ jobs:
               # "mat_tests.py", 
               # "da_tests.py"
             ]
-        exclude:
+        # exclude:
           # - os: macos-latest
             # python-version: 3.7
           # - os: macos-latest
