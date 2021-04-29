@@ -74,7 +74,7 @@ jobs:
     - name: Setup Miniconda
       uses: conda-incubator/setup-miniconda@v2
       with:
-        miniforge-variant: latest
+        miniforge-version: latest
         # miniconda-version: "latest"
         python-version: ${{ matrix.python-version }}
         # mamba-version: "*"
