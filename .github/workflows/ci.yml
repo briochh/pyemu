@@ -47,16 +47,16 @@ jobs:
 
 
     steps:
-    - uses:  actions/checkout@v2.3.4 # checksout this repo
+    - uses:  actions/checkout@v2 # checksout this repo
     # - name: Setup Ninja
       # if: ${{ runner.os == 'Windows' }} 
     - uses: seanmiddleditch/gha-setup-ninja@master
 
     - name: Cache Miniconda
-      uses: actions/cache@v2.1.0
+      uses: actions/cache@v2
       env:
-        # Increase this value to reset cache if environment.yml has changed
-        CACHE_NUMBER: 1
+        # Increase this value to reset cache if etc/environment.yml has not changed
+        CACHE_NUMBER: 0
       with:
         path: ~/conda_pkgs_dir
         key: ${{ runner.os }}-${{ matrix.python-version }}-${{ matrix.run-type }}-${{ env.CACHE_NUMBER }}-${{ hashFiles('etc/environment.yml') }}
@@ -76,7 +76,7 @@ jobs:
       with:
         miniconda-version: "latest"
         python-version: ${{ matrix.python-version }}
-        mamba-version: "*"
+        # mamba-version: "*"
         channels: conda-forge
         auto-update-conda: true
         activate-environment: pyemu
@@ -86,7 +86,8 @@ jobs:
       if: matrix.run-type == 'nb'
       shell: bash -l {0}
       run: |
-        mamba install --name pyemu jupyter jupytext
+        # mamba install --name pyemu jupyter jupytext
+        conda install --name pyemu jupyter jupytext
 
     - name: Add packages to pyemu environment using mamba or conda
       shell: bash -l {0}
@@ -94,7 +95,8 @@ jobs:
         if [ "$RUNNER_OS" == "Windows" ]; then
           conda env update --name pyemu --file etc/environment.yml
         else
-          mamba env update --name pyemu --file etc/environment.yml
+          # mamba env update --name pyemu --file etc/environment.yml
+          conda env update --name pyemu --file etc/environment.yml
         fi
     
     - name: PESTPP exe install
