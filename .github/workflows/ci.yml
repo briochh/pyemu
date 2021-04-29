@@ -86,8 +86,8 @@ jobs:
       if: matrix.run-type == 'nb'
       shell: bash -l {0}
       run: |
-        # mamba install --name pyemu jupyter jupytext
-        conda install --name pyemu jupyter jupytext
+        mamba install --name pyemu jupyter jupytext
+        # conda install --name pyemu jupyter jupytext
 
     - name: Add packages to pyemu environment using mamba or conda
       shell: bash -l {0}
@@ -95,8 +95,8 @@ jobs:
         if [ "$RUNNER_OS" == "Windows" ]; then
           conda env update --name pyemu --file etc/environment.yml
         else
-          # mamba env update --name pyemu --file etc/environment.yml
-          conda env update --name pyemu --file etc/environment.yml
+          mamba env update --name pyemu --file etc/environment.yml
+          # conda env update --name pyemu --file etc/environment.yml
         fi
     
     - name: PESTPP exe install
