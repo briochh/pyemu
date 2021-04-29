@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest] #, windows-latest] #, macos-latest] 
+        os: [ubuntu-latest, windows-latest] #, macos-latest] 
         python-version: [3.7, 3.8] # , 3.7, 3.6]
         run-type: [std]
         test-path: [
@@ -39,7 +39,7 @@ jobs:
             # python-version: 3.7#####
           # - os: windows-latest######
             # python-version: 3.9#######
-        # include:#####
+        # include: #####
           # - os: ubuntu-latest#####
             # python-version: 3.8#####
             # run-type: nb#####
@@ -93,15 +93,22 @@ jobs:
         # mamba install --name pyemu jupyter jupytext
         conda install --name pyemu jupyter jupytext
 
-    - name: Add packages to pyemu environment using mamba or conda
+    - name: Add packages to pyemu environment using conda
+      if: ${{ runner.os == 'Windows' || matrix.python-version < 3.8 }}
       shell: bash -l {0}
       run: |
-        if [ "$RUNNER_OS" == "Windows" ]; then
           conda env update --name pyemu --file etc/environment.yml
-        else
-          # mamba env update --name pyemu --file etc/environment.yml
-          conda env update --name pyemu --file etc/environment.yml
-        fi
+    
+    - name: Add packages to pyemu environment using mamba
+      if: ${{ runner.os != 'Windows' && matrix.python-version >= 3.8 }}
+      shell: bash -l {0}
+      run: |
+          mamba env update --name pyemu --file etc/environment.yml
+
+    # else
+    #       # mamba env update --name pyemu --file etc/environment.yml
+    #       conda env update --name pyemu --file etc/environment.yml
+    #     fi
     
     - name: PESTPP exe install
       shell: bash -l {0}
