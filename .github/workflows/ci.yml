@@ -83,25 +83,25 @@ jobs:
         # auto-update-conda: true
         activate-environment: pyemu
         use-mamba: true
-        environment-file: etc/environment.yml
+        # environment-file: etc/environment.yml
         # use-only-tar-bz2: true
 
     - name: Add jupyter and jupytext to notebooks run
       if: matrix.run-type == 'nb'
       shell: bash -l {0}
       run: |
-        mamba install --name pyemu jupyter jupytext
-        # conda install --name pyemu jupyter jupytext
+        # mamba install --name pyemu jupyter jupytext
+        conda install --name pyemu jupyter jupytext
 
-    # - name: Add packages to pyemu environment using mamba or conda
-    #   shell: bash -l {0}
-    #   run: |
-    #     if [ "$RUNNER_OS" == "Windows" ]; then
-    #       conda env update --name pyemu --file etc/environment.yml
-    #     else
-    #       mamba env update --name pyemu --file etc/environment.yml
-    #       # conda env update --name pyemu --file etc/environment.yml
-    #     fi
+    - name: Add packages to pyemu environment using mamba or conda
+      shell: bash -l {0}
+      run: |
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          conda env update --name pyemu --file etc/environment.yml
+        else
+          # mamba env update --name pyemu --file etc/environment.yml
+          conda env update --name pyemu --file etc/environment.yml
+        fi
     
     - name: PESTPP exe install
       shell: bash -l {0}
