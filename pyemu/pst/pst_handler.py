@@ -827,7 +827,10 @@ class Pst(object):
                         filename, delim_whitespace=True, na_values=missing_vals
                     )
                 else:
-                    df = pd.read_csv(filename, sep=sep, na_values=missing_vals)
+                    df = pd.read_csv(
+                        filename, sep=sep, na_values=missing_vals,
+                        low_memory=False
+                    )
                 df.columns = df.columns.str.lower()
                 for easy, hard in alias_map.items():
                     if easy in df.columns and hard in df.columns:
@@ -3634,7 +3637,7 @@ class Pst(object):
             try:
                 meta_dict = df.loc[:, name].apply(
                     lambda x: dict(
-                        [item.split(":") for item in x.split("_") if ":" in item]
+                        (item.split(":") for item in x.split("_") if ":" in item)
                     )
                 )
                 unique_keys = []
