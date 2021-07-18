@@ -1589,10 +1589,11 @@ class PstFrom(object):
 
         Args:
             filenames (`str`): Model input filenames to parameterize
-            par_type (`str`): One of `grid` - for every element, `constant` - for single
-                parameter applied to every element, `zone` - for zone-based
-                parameterization (only for array-style) or `pilotpoint` - for
-                pilot-point base parameterization of array style input files.
+            par_type (`str`): One of
+                `grid` - for every element,
+                `constant` - for single parameter applied to every element,
+                `zone` - for zone-based parameterization (only for array-style) or
+                `pilotpoint` - for pilot-point base parameterization of array style input files.
                 Note `kl` not yet implemented # TODO
             zone_array (`np.ndarray`): array defining spatial limits or zones
                 for parameterization.
