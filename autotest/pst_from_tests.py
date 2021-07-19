@@ -616,7 +616,7 @@ def mf6_freyberg_test():
         for line in lines:
             fw.write(line)
 
-    # generate a test with headers and non spatial idex
+    # generate a test with headers and non spatial index
     sfr_pkgdf = pd.DataFrame.from_records(m.sfr.packagedata.array)
     l = sfr_pkgdf.columns.to_list()
     l = ['#rno', 'k', 'i', 'j'] + l[2:]
@@ -630,6 +630,18 @@ def mf6_freyberg_test():
         fw.write('\n')
         for line in lines:
             fw.write(line)
+    # generate test dataset with duplicated spatial points
+    df = pd.read_csv(
+        os.path.join('temp_pst_from',
+                     "freyberg6.sfr_packagedata.txt"),
+        delim_whitespace=True, header=None)
+    df2 = df.copy()
+    df2.loc[:, 0] = range(df.loc[:, 0].max()+1, df.loc[:, 0].max()+len(df)+1)
+    df2.loc[:, 9] = 0.
+    df = pd.concat([df, df2]).reset_index(drop=True)
+    df.to_csv(os.path.join('temp_pst_from',
+                     "freyberg6.sfr_packagedata_test2.txt"),
+              index=False, header=False, sep=' ')
 
     template_ws = "new_temp"
     # sr0 = m.sr
@@ -676,6 +688,13 @@ def mf6_freyberg_test():
     tags = {"npf_k_":[0.1,10.],"npf_k33_":[.1,10],"sto_ss":[.1,10],"sto_sy":[.9,1.1],"rch_recharge":[.5,1.5]}
     dts = pd.to_datetime("1-1-2018") + pd.to_timedelta(np.cumsum(sim.tdis.perioddata.array["perlen"]),unit="d")
     print(dts)
+    # test duplicate spatial
+    pf.add_parameters(filenames="freyberg6.sfr_packagedata_test2.txt",
+                      par_name_base="sfr_dup",
+                      pargp="sfr_dup", index_cols={'rno':0, 'i': 2, 'j': 3},
+                      use_cols=9, upper_bound=10.,
+                      lower_bound=0.1,
+                      par_type="grid", geostruct=gr_gs)
     for tag,bnd in tags.items():
         lb,ub = bnd[0],bnd[1]
         arr_files = [f for f in os.listdir(tmp_model_ws) if tag in f and f.endswith(".txt")]
@@ -3499,9 +3518,9 @@ if __name__ == "__main__":
     #invest()
     # freyberg_test()
     #freyberg_prior_build_test()
-    # mf6_freyberg_test()
+    mf6_freyberg_test()
     #mf6_freyberg_da_test()
-    mf6_freyberg_shortnames_test()
+    # mf6_freyberg_shortnames_test()
     # mf6_freyberg_direct_test()
     #mf6_freyberg_varying_idomain()
     #xsec_test()
