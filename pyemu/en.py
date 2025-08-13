@@ -1584,7 +1584,7 @@ class ParameterEnsemble(Ensemble):
 
         new_en.back_transform()
         if retrans:
-            self.transform()
+            self.back_transform()
         return new_en
 
     def enforce(self, how="reset", bound_tol=0.0):
