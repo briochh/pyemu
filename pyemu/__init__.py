@@ -19,7 +19,7 @@ from .plot import plot_utils
 from .pst import Pst, pst_utils, Results
 from .sc import Schur
 from .utils import (geostats, gw_utils, helpers, metrics, optimization,
-                    os_utils, pp_utils, smp_utils)
+                    os_utils, pp_utils, smp_utils, vis_utils)
 from .emulators import (
                       #emulators
                       Emulator, DSI, LPFA,  GPR,

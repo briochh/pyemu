@@ -26,6 +26,19 @@ def write_ins_file(d):
 	return df
 
 
+def hds2csv(d='.'):
+    import flopy
+    from pathlib import Path
+    import numpy as np
+    hfile = list(Path(d).glob('*.hds'))[0]
+    hds = flopy.utils.binaryfile.HeadFile(hfile)
+    for n, (kstp, kper) in enumerate(hds.get_kstpkper()):
+        # get the head data
+        head = hds.get_data(kstpkper=(kstp, kper))
+        for k, hdk in enumerate(head):
+            np.savetxt(Path(d, f'hds_{kper}_{kstp}_{k}.csv'), hdk)
+
+
 if __name__ == "__main__":
 	#process_model_outputs()
 	write_ins_file(".")

@@ -37,7 +37,9 @@ optional = [
     "scipy",
     "shapely",
     "jinja2",  # for to_latex options
-    "pypestutils"
+    "pypestutils",
+    "plotly",
+    "anywidget"
 ]
 test = [
     "coveralls",

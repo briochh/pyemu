@@ -12,6 +12,8 @@ dependencies:
   - matplotlib
   - pyshp
   - jinja2
+  - plotly
+  - anywidget
   # tests
   - coveralls
   - flaky
